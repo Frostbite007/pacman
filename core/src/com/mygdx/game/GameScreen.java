@@ -12,22 +12,20 @@ public class GameScreen extends ScreenAdapter{
 	private MyPacman myPacman;
 	private Pacman pacman;
 	World world;
+	private WorldRenderer worldRenderer;
 	public GameScreen(MyPacman myPacman){
 		this.myPacman = myPacman;
 		pacmanImg = new Texture("pacman.png");
 		world = new World(myPacman);
 		pacman = world.getPacman();
+		worldRenderer = new WorldRenderer(myPacman,world);
 	}
 	 @Override
 	 public void render(float delta) {
 		 update(delta);
 		 Gdx.gl.glClearColor(0, 0, 0, 1);
 	     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	     SpriteBatch batch = myPacman.batch;
-	     batch.begin();
-		 Vector2 pos = pacman.getPosition();
-		 batch.draw(pacmanImg,pos.x,pos.y);
-		 batch.end();
+	     worldRenderer.render(delta);
 	 }
 	 public void update(float delta){
 		  if(Gdx.input.isKeyPressed(Keys.UP)) {
