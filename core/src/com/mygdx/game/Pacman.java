@@ -16,6 +16,7 @@ public class Pacman {
         {0,1},
         {-1,0}
     };
+    public static final int SPEED = 10;
 	
 	public Pacman(int x, int y){
 		position = new Vector2(x,y);
@@ -24,7 +25,7 @@ public class Pacman {
 		return position;
 	}
 	 public void move(int dir) { 
-		 position.x += 10 * DIR_OFFSETS[dir][0];
-	     position.y += 10 * DIR_OFFSETS[dir][1];
+		 position.x += SPEED * DIR_OFFSETS[dir][0];
+	     position.y += SPEED * DIR_OFFSETS[dir][1];
 	 }
 }
