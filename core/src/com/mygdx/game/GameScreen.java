@@ -17,7 +17,7 @@ public class GameScreen extends ScreenAdapter{
 		this.myPacman = myPacman;
 		pacmanImg = new Texture("pacman.png");
 		world = new World(myPacman);
-		pacman = world.getPacman();
+		pacman = world.getPosition();
 		worldRenderer = new WorldRenderer(myPacman,world);
 	}
 	 @Override
