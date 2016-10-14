@@ -16,16 +16,31 @@ public class Pacman {
         {0,1},
         {-1,0}
     };
-    public static final int SPEED = 10;
+    private int currentDirection;
+    private int nextDirection;
+    public static final int SPEED = 5;
 	
 	public Pacman(int x, int y){
 		position = new Vector2(x,y);
+		currentDirection = DIRECTION_STILL;
+		nextDirection = DIRECTION_STILL;
 	}
 	public Vector2 getPosition(){
 		return position;
 	}
-	 public void move(int dir) { 
-		 position.x += SPEED * DIR_OFFSETS[dir][0];
-	     position.y += SPEED * DIR_OFFSETS[dir][1];
-	 }
+	public void setNextDirection(int dir){
+		nextDirection = dir;
+	}
+	public void update(){
+		if(isAtCenter()){
+			currentDirection = nextDirection;
+		}
+		position.x += SPEED*DIR_OFFSETS[currentDirection][0];
+		position.y += SPEED*DIR_OFFSETS[currentDirection][1];
+	}
+	public boolean isAtCenter(){
+		int blockSize=WorldRenderer.BLOCK_SIZE;
+		
+		return (((((int)position.x-blockSize/2)%blockSize)==0)&&(((int)position.y-blockSize/2)%blockSize==0));
+	}
 }

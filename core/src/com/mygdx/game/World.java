@@ -7,14 +7,16 @@ public class World {
 	 
 	 World(MyPacman myPacman) {
 		 this.myPacman = myPacman;
-	     pacman = new Pacman(100,100);
+	     pacman = new Pacman(60,60);
 	     maze = new Maze();
 	    }
-	 Pacman getPosition() {
+	 Pacman getPacman() {
 	     return pacman;
 	 }
 	 Maze  getMaze(){
 		 return maze;
 	 }
-	 
+	 public void update(float delta){
+		 pacman.update();
+	 }
 }
