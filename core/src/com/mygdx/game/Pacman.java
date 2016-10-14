@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Pacman {
 	private Vector2 position;
+	private Maze maze;
 	public static final int DIRECTION_UP = 1;
     public static final int DIRECTION_RIGHT = 2;
     public static final int DIRECTION_DOWN = 3;
@@ -19,11 +20,25 @@ public class Pacman {
     private int currentDirection;
     private int nextDirection;
     public static final int SPEED = 5;
-	
-	public Pacman(int x, int y){
+    private int getRow(){
+    	return ((int)position.y)/WorldRenderer.BLOCK_SIZE;
+    }
+    private int getColumn(){
+    	return ((int)position.x)/WorldRenderer.BLOCK_SIZE;
+    }
+	private boolean canMoveInDirection(int dir){
+		int newRow = (int)getRow()+DIR_OFFSETS[nextDirection][1];
+		int newCol = (int)getColumn()+DIR_OFFSETS[nextDirection][0];
+		if(maze.hasWallAt(newRow,newCol)){
+			return false;
+		}
+		return true;
+	}
+	public Pacman(int x, int y,Maze maze){
 		position = new Vector2(x,y);
 		currentDirection = DIRECTION_STILL;
 		nextDirection = DIRECTION_STILL;
+		this.maze = maze;
 	}
 	public Vector2 getPosition(){
 		return position;
@@ -33,7 +48,11 @@ public class Pacman {
 	}
 	public void update(){
 		if(isAtCenter()){
-			currentDirection = nextDirection;
+			if(canMoveInDirection(nextDirection)){
+				currentDirection = nextDirection;
+			}else{
+				currentDirection = DIRECTION_STILL;
+			}
 		}
 		position.x += SPEED*DIR_OFFSETS[currentDirection][0];
 		position.y += SPEED*DIR_OFFSETS[currentDirection][1];
